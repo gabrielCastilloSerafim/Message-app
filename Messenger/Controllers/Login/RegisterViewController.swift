@@ -22,20 +22,80 @@ final class RegisterViewController: UIViewController {
     @IBOutlet weak var passwordLabel: UITextField!
     @IBOutlet weak var registerButton: UIButton!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //Round register button corner
+        //Round register/profile picture button corner
         registerButton.layer.cornerRadius = registerButton.frame.height/4
         
+        //Delegates
         firstNameLabel.delegate = self
+        lastNameLabel.delegate = self
+        emailLabel.delegate = self
+        passwordLabel.delegate = self
         
         //Setup profile picture frame to be rounded and have a border
         profilePicture.layer.masksToBounds = true
-        profilePicture.layer.cornerRadius = profilePicture.frame.height/2.0
+        profilePicture.layer.cornerRadius = profilePicture.frame.height/2
         profilePicture.layer.borderWidth = 2
         profilePicture.layer.borderColor = UIColor.lightGray.cgColor
+        
+        //Setup text field border and add right icon using extension from "UITextfieldExtensions" under "extensions" folder
+        firstNameLabel.layer.borderWidth = 1
+        firstNameLabel.layer.borderColor = UIColor.lightGray.cgColor
+        firstNameLabel.setupRightSideImage(sistemImageNamed: "person.text.rectangle")
+        
+        lastNameLabel.layer.borderWidth = 1
+        lastNameLabel.layer.borderColor = UIColor.lightGray.cgColor
+        lastNameLabel.setupRightSideImage(sistemImageNamed: "person.text.rectangle")
+        
+        emailLabel.layer.borderWidth = 1
+        emailLabel.layer.borderColor = UIColor.lightGray.cgColor
+        emailLabel.setupRightSideImage(sistemImageNamed: "envelope")
+        
+        passwordLabel.layer.borderWidth = 1
+        passwordLabel.layer.borderColor = UIColor.lightGray.cgColor
+        passwordLabel.setupRightSideImage(sistemImageNamed: "lock.rectangle")
+        
+        //Declared in "SlideViewWhithKeyboard" under "extensions" to manage keyboard obstructing textField and adding touch outside to dismiss.
+        setupKeyboardHiding()
+        hideKeyboardWhenTappedAround()
     }
     
+    //MARK: - Keyboard obstructing textFields management
+    
+    private func setupKeyboardHiding() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    @objc func keyboardWillShow(sender: NSNotification) {
+
+        guard let userInfo = sender.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
+              let currentTextField = UIResponder.currentFirst() as? UITextField
+        else { return }
+
+        // check if the top of the keyboard is above the bottom of the currently focused textBox ...
+        let keyboardTopY = keyboardFrame.cgRectValue.origin.y
+        let convertedTextFieldFrame = view.convert(currentTextField.frame, from: currentTextField.superview)
+        let textFieldBottomY = convertedTextFieldFrame.origin.y + convertedTextFieldFrame.size.height
+
+        // if textField bottom is below keyboard bottom - bump the frame up
+        if textFieldBottomY > keyboardTopY {
+            let textFieldHeight:Double = 70
+            let textBoxY = convertedTextFieldFrame.origin.y
+            let newFrameY = (textBoxY - keyboardTopY + textFieldHeight) * -1
+            view.frame.origin.y = newFrameY
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        view.frame.origin.y = 0
+    }
+    
+    
+    //MARK: - UIButtons functionality
     
     
     @IBAction func changeProfilePictureTapped(_ sender: UIButton) {
@@ -54,6 +114,9 @@ final class RegisterViewController: UIViewController {
             Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
                 
                 if let err = error {
+                    //Cals function from extension "HandleFirebaseErrors" under "extensions" folder to properly present error for user.
+                    self.handleFireAuthError(error: err)
+                    
                     print(err.localizedDescription)
                     return
                 } else {
@@ -148,12 +211,14 @@ extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationC
     
 }
 
-//MARK: - Textfield extra validation
+//MARK: - UITextFieldDelegate
 
 extension RegisterViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.endEditing(true)
+        //Use switch function below to send user to next textField when return button is tapped.
+        self.switchBasedNextTextField(textField)
+        
         return true
     }
     
@@ -162,6 +227,19 @@ extension RegisterViewController: UITextFieldDelegate {
             return true
         } else {
             return false
+        }
+    }
+    
+    private func switchBasedNextTextField(_ textField: UITextField) {
+        switch textField {
+        case self.firstNameLabel:
+            self.lastNameLabel.becomeFirstResponder()
+        case self.lastNameLabel:
+            self.emailLabel.becomeFirstResponder()
+        case self.emailLabel:
+            self.passwordLabel.becomeFirstResponder()
+        default:
+            self.passwordLabel.resignFirstResponder()
         }
     }
 }

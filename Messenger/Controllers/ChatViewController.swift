@@ -35,18 +35,26 @@ final class ChatViewController: MessagesViewController {
         
     }
     
-    //For the avatar photos
-    private var senderPhotoURL: URL?
-    private var otherPhotoURL: URL?
+    //Called on view did load to listen for messages
+    private func listenForMessages() {
+        DatabaseManager.shared.getAllMessagesForConversation(with: Self.conversationId) { [weak self] result in
+            switch result {
+            case .success(let messages):
+                guard messages.isEmpty == false else {
+                    return
+                }
+                self?.messages = messages
+                
+                DispatchQueue.main.async {
+                    self?.messagesCollectionView.reloadDataAndKeepOffset()
+                }
+            case .failure(let error):
+                print("failed to get messages:\(error)")
+            }
+        }
+    }
     
-    //Created this date formatter to user across app to get formatted date
-    public static let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .long
-        formatter.locale = .current
-        return formatter
-    }()
+    //MARK: - Variables and computed properties
     
     //Data that comes from conversation and new conversation VCs
     static var otherUsersName = ""
@@ -66,24 +74,18 @@ final class ChatViewController: MessagesViewController {
                       displayName: "Me")
     }
     
-    //Called on view did load to listen for messages
-    private func listenForMessages() {
-        DatabaseManager.shared.getAllMessagesForConversation(with: Self.conversationId) { [weak self] result in
-            switch result {
-            case .success(let messages):
-                guard messages.isEmpty == false else {
-                    return
-                }
-                self?.messages = messages
-                
-                DispatchQueue.main.async {
-                    self?.messagesCollectionView.reloadDataAndKeepOffset()
-                }
-            case .failure(let error):
-                print("failed to get messages:\(error)")
-            }
-        }
-    }
+    //For the avatar photos
+    private var senderPhotoURL: URL?
+    private var otherPhotoURL: URL?
+    
+    //Created this date formatter to user across app to get formatted date
+    public static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .long
+        formatter.locale = .current
+        return formatter
+    }()
     
 
 }
@@ -173,7 +175,7 @@ extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, Messag
         let sender = message.sender
         //if message comes from user use this color
         if sender.senderId == selfSender.senderId {
-            return #colorLiteral(red: 0.5919638276, green: 0.8727018237, blue: 0.9428254962, alpha: 1)
+            return #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
         } else {
             return .secondarySystemBackground
         }

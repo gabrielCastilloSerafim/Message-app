@@ -26,12 +26,13 @@ final class LoginViewController: UIViewController {
         loginButton.layer.cornerRadius = loginButton.frame.height/4
         registerButton.layer.cornerRadius = registerButton.frame.height/4
         
+        //Delegates
         emailField.delegate = self
         passwordField.delegate = self
         
         //Changes the back button text that will appear in the next view controller
         let backBarBtnItem = UIBarButtonItem()
-            backBarBtnItem.title = "Login"
+            backBarBtnItem.title = " "
             navigationItem.backBarButtonItem = backBarBtnItem
         
         //Hides tab bar controller
@@ -39,7 +40,22 @@ final class LoginViewController: UIViewController {
         
         //Hides back button on view
         self.navigationItem.setHidesBackButton(true, animated: true)
+        
+        //Setup text field border and add right icon using extension from "UITextfieldExtensions" under "extensions" folder
+        emailField.layer.borderWidth = 1
+        emailField.layer.borderColor = UIColor.lightGray.cgColor
+        emailField.setupRightSideImage(sistemImageNamed: "envelope")
+        
+        passwordField.layer.borderWidth = 1
+        passwordField.layer.borderColor = UIColor.lightGray.cgColor
+        passwordField.setupRightSideImage(sistemImageNamed: "lock.rectangle")
+        
+        //Function declared in "SlideViewWhithKeyboard" under "extensions"
+        hideKeyboardWhenTappedAround()
+        
     }
+    
+    //MARK: - UIButtons functionality
     
     @IBAction func loginTapped(_ sender: UIButton) {
         
@@ -53,6 +69,9 @@ final class LoginViewController: UIViewController {
                     self?.spinner.dismiss(animated: true)
                 }
                 if let err = error {
+                    //Cals function from extension "HandleFirebaseErrors" under "extensions" folder to properly present error for user.
+                    self?.handleFireAuthError(error: err)
+                    
                     print(err.localizedDescription)
                     return
                 } else {
@@ -82,20 +101,17 @@ final class LoginViewController: UIViewController {
                     //Dismiss view
                     self?.navigationController?.popToRootViewController(animated: false)
                 }
-              
             }
         }
     }
-    
-    
 }
 
 //MARK: - Text input validation
 
 extension LoginViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        textField.endEditing(true)
+        //Use switch function below to send user to next textField when return button is tapped.
+        self.switchBasedNextTextField(textField)
         return true
     }
     
@@ -106,4 +122,15 @@ extension LoginViewController: UITextFieldDelegate {
             return false
         }
     }
+    
+    private func switchBasedNextTextField(_ textField: UITextField) {
+        switch textField {
+        case self.emailField:
+            self.passwordField.becomeFirstResponder()
+        default:
+            self.passwordField.resignFirstResponder()
+        }
+    }
 }
+
+

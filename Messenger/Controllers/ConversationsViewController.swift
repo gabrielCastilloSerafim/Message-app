@@ -89,6 +89,8 @@ final class ConversationsViewController: UIViewController {
         }
     }
     
+    //MARK: - UIButtons functionality
+    
     @IBAction func composeButtonTapped(_ sender: UIBarButtonItem) {
         //Presents new screen modally
         performSegue(withIdentifier: "conversationToNewConversation", sender: self)

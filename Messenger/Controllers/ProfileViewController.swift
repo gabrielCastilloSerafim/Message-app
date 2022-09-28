@@ -36,7 +36,6 @@ final class ProfileViewController: UIViewController {
         let fileName = safeEmail + "_profile_picture.png"
         let path = "images/" + fileName
         
-        
         //Function from the storageManager that gets the download url for the profile picture and if succeeds calls other function that downloads the image and sets it to the UIImageView
         StorageManager.shared.downloadURL(for: path) { [weak self] result in
             switch result {
@@ -54,6 +53,8 @@ final class ProfileViewController: UIViewController {
         firstNameLabel.text = UserDefaults.standard.string(forKey: "firstName")
         lastNameLabel.text = UserDefaults.standard.string(forKey: "lastName")
     }
+    
+    //MARK: - UIButtons functionality
     
     @IBAction func logOutButtonPressed(_ sender: UIButton) {
         do {

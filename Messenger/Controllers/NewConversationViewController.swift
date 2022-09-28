@@ -46,7 +46,7 @@ final class NewConversationViewController: UIViewController {
         searchBar.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(UINib(nibName: "FindUsersTableViewCell" , bundle: nil), forCellReuseIdentifier: "FindUserCell")
         
         //Set the search bar to be the top item inside of the navBar
         navBar.topItem?.titleView = searchBar
@@ -162,8 +162,28 @@ extension NewConversationViewController: UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = results[indexPath.row]["name"]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FindUserCell", for: indexPath) as! FindUsersTableViewCell
+        //Populate cell...
+        
+        //Set text
+        cell.userNameLabel.text = results[indexPath.row]["name"]
+        
+        //Get image url, download and set it to image view using sd_setImage
+        let userEmail = results[indexPath.row]["email"]!
+        let formattedEmail = DatabaseManager.formatedEmail(emailAddress: userEmail)
+        
+        let path = "images/\(formattedEmail)_profile_picture.png"
+        
+        StorageManager.shared.downloadURL(for: path) { result in
+            switch result {
+                
+            case .success(let url):
+                cell.profilePicture.sd_setImage(with: url)
+            case .failure(let error):
+                print(error)
+            }
+        }
+        
         return cell
         
     }
@@ -174,7 +194,7 @@ extension NewConversationViewController: UITableViewDelegate, UITableViewDataSou
         let targetUserData = results[indexPath.row]
         //Set chat VC isNewConversation property to true
         ChatViewController.isNewConversation = true
-        //Dismiss view and assign the target user to the closure property that we created wich will trigger the closure property called on the conversation view controller
+        //Dismiss view and assign the target user to the closure property that we created which will trigger the closure property called on the conversation view controller
         dismiss(animated: true) {
             Self.completion?(targetUserData)
         }

@@ -483,6 +483,7 @@ extension DatabaseManager {
         })
     }
     
+    //MARK: - Deleting conversations
 
     ///Deletes conversation from user's database
     public func deleteConversation(conversationId: String, completion: @escaping (Bool) -> Void) {
@@ -517,15 +518,11 @@ extension DatabaseManager {
                     completion(true)
                 }
             }
-            
-            
-            
         }
     }
-}
-
-
-extension DatabaseManager {
+    
+    //MARK: - Generic databaseManegement functions
+    
     //Pass in generic child path to get result back from db
     public func getDataFor(path: String, completion: @escaping (Result<Any, Error>) -> Void) {
         self.database.child("\(path)").observeSingleEvent(of: .value) { snapshot in
@@ -536,9 +533,8 @@ extension DatabaseManager {
             completion(.success(value))
         }
     }
-    
-}
 
+}
 
 
 
