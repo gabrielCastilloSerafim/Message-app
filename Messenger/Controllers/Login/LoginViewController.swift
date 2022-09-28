@@ -149,14 +149,6 @@ extension LoginViewController: UITextFieldDelegate {
         return true
     }
     
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        if textField.text != "" {
-            return true
-        } else {
-            return false
-        }
-    }
-    
     private func switchBasedNextTextField(_ textField: UITextField) {
         switch textField {
         case self.emailField:
