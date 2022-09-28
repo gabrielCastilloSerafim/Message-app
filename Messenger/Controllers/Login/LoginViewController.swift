@@ -50,10 +50,44 @@ final class LoginViewController: UIViewController {
         passwordField.layer.borderColor = UIColor.lightGray.cgColor
         passwordField.setupRightSideImage(sistemImageNamed: "lock.rectangle")
         
-        //Function declared in "SlideViewWhithKeyboard" under "extensions"
+        //Declared in "SlideViewWhithKeyboard" under "extensions" to manage keyboard obstructing textField and adding touch outside to dismiss.
+        setupKeyboardHiding()
         hideKeyboardWhenTappedAround()
         
     }
+    
+    //MARK: - Keyboard obstructing textFields management
+    
+    private func setupKeyboardHiding() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    @objc func keyboardWillShow(sender: NSNotification) {
+
+        guard let userInfo = sender.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
+              let currentTextField = UIResponder.currentFirst() as? UITextField
+        else { return }
+
+        // check if the top of the keyboard is above the bottom of the currently focused textBox ...
+        let keyboardTopY = keyboardFrame.cgRectValue.origin.y
+        let convertedTextFieldFrame = view.convert(currentTextField.frame, from: currentTextField.superview)
+        let textFieldBottomY = convertedTextFieldFrame.origin.y + convertedTextFieldFrame.size.height
+
+        // if textField bottom is below keyboard bottom - bump the frame up
+        if textFieldBottomY > keyboardTopY {
+            let textFieldHeight:Double = 70
+            let textBoxY = convertedTextFieldFrame.origin.y
+            let newFrameY = (textBoxY - keyboardTopY + textFieldHeight) * -1
+            view.frame.origin.y = newFrameY
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        view.frame.origin.y = 0
+    }
+    
     
     //MARK: - UIButtons functionality
     
