@@ -43,8 +43,14 @@ final class ConversationsViewController: UIViewController {
         tableView.dataSource = self
         tableView.register(UINib(nibName: "ConversationTableViewCell" , bundle: nil), forCellReuseIdentifier: "ConversationsCell")
         
+        //Changes the back button text that will appear in the next view controller
+        let backBarBtnItem = UIBarButtonItem()
+            backBarBtnItem.title = " "
+            navigationItem.backBarButtonItem = backBarBtnItem
+        
         validateAuth()
         //startListeningForConversations()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {

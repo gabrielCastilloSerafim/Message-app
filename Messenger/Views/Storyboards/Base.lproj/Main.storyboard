@@ -232,7 +232,9 @@
                         <viewLayoutGuide key="safeArea" id="nbA-c0-YR0"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="Snb-1l-Wdy"/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="Snb-1l-Wdy">
+                        <nil key="title"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="86W-G2-pT8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

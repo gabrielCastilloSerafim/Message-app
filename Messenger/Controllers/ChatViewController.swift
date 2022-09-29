@@ -18,24 +18,37 @@ final class ChatViewController: MessagesViewController {
         //Set the chat nav bar title name
         navigationItem.title = Self.otherUsersName
         
+        //Delegates and datasources
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
         messageInputBar.delegate = self
         
-        listenForMessages()
+        //messageInputBar setup
+        messageInputBar.isTranslucent = true
+        messageInputBar.inputTextView.backgroundColor = UIColor.white
+        messageInputBar.inputTextView.layer.borderWidth = 0.5
+        messageInputBar.inputTextView.layer.borderColor = UIColor.lightGray.cgColor
+        messageInputBar.inputTextView.layer.cornerRadius = 17
+        messageInputBar.inputTextView.placeholder = "  Aa"
+        messageInputBar.middleContentViewPadding = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
+        //messageInputBar.backgroundView.backgroundColor = .red
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         //Presents keyboard automatically when view will appear
         messageInputBar.inputTextView.becomeFirstResponder()
+        
+        listenForMessages()
         
         self.messagesCollectionView.scrollToLastItem(animated: true)
         
     }
     
-    //Called on view did load to listen for messages
+    //Called on view did appear to listen for messages
     private func listenForMessages() {
         DatabaseManager.shared.getAllMessagesForConversation(with: Self.conversationId) { [weak self] result in
             switch result {
@@ -47,6 +60,8 @@ final class ChatViewController: MessagesViewController {
                 
                 DispatchQueue.main.async {
                     self?.messagesCollectionView.reloadDataAndKeepOffset()
+                    self?.messagesCollectionView.scrollToLastItem()
+                    
                 }
             case .failure(let error):
                 print("failed to get messages:\(error)")
@@ -111,10 +126,13 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         //Check if is a new conversation and if it is creates a new conversation
         if Self.isNewConversation == true {
             //Create new conversation on database
-            DatabaseManager.shared.createNewConversation(with: formattedEmail, name: Self.otherUsersName, firstMessage: message) { success in
+            DatabaseManager.shared.createNewConversation(with: formattedEmail, name: Self.otherUsersName, firstMessage: message) { [weak self] success in
                 if success == true {
                     print("message sent")
                     Self.isNewConversation = false
+                    let newConversationId = "conversation_\(message.messageId)"
+                    Self.conversationId = newConversationId
+                    self?.listenForMessages()
                 } else {
                     print("Failed to send")
                 }
