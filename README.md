@@ -1,6 +1,6 @@
 # Message-app
 
-This is a real time IOS messaging app wrote in Swift 5. The app uses Firebase Auth to autenticate and register users and Firebase Realtime database to manage real time messaging.
+This is a real time IOS messaging app wrote in Swift 5. The app uses Firebase Auth to authenticate and register users and Firebase Realtime database to manage real time messaging.
 
 ## Features
 
