@@ -21,11 +21,22 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Set logOut button to have rounded corners
+        //Set logOut button to have rounded corners and font
         logOutButton.layer.cornerRadius = logOutButton.frame.height/4
+        if #available(iOS 15.0, *) {
+            logOutButton.configuration?.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
+                var outgoing = incoming
+                outgoing.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+                return outgoing
+            }
+        } else {
+            logOutButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        }
 
-        //Set the profile image view to have be a circle
+        //Set the profile image view to be a circle and have border
         profilePicture.layer.cornerRadius = profilePicture.frame.width/2
+        profilePicture.layer.borderWidth = 2
+        profilePicture.layer.borderColor = UIColor.white.cgColor
         
     }
     

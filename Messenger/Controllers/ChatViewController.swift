@@ -193,7 +193,7 @@ extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, Messag
         let sender = message.sender
         //if message comes from user use this color
         if sender.senderId == selfSender.senderId {
-            return #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
+            return #colorLiteral(red: 0.07843137255, green: 0.4509803922, blue: 0.2078431373, alpha: 1)
         } else {
             return .secondarySystemBackground
         }

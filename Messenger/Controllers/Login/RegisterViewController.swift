@@ -25,8 +25,18 @@ final class RegisterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //Round register/profile picture button corner
+        //Round register button corner and size
         registerButton.layer.cornerRadius = registerButton.frame.height/4
+        registerButton.layer.cornerRadius = registerButton.frame.height/4
+        if #available(iOS 15.0, *) {
+            registerButton.configuration?.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
+                var outgoing = incoming
+                outgoing.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+                return outgoing
+            }
+        } else {
+            registerButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        }
         
         //Delegates
         firstNameLabel.delegate = self
@@ -38,23 +48,23 @@ final class RegisterViewController: UIViewController {
         profilePicture.layer.masksToBounds = true
         profilePicture.layer.cornerRadius = profilePicture.frame.height/2
         profilePicture.layer.borderWidth = 2
-        profilePicture.layer.borderColor = UIColor.lightGray.cgColor
+        profilePicture.layer.borderColor = UIColor.gray.cgColor
         
         //Setup text field border and add right icon using extension from "UITextfieldExtensions" under "extensions" folder
-        firstNameLabel.layer.borderWidth = 1
-        firstNameLabel.layer.borderColor = UIColor.lightGray.cgColor
+        firstNameLabel.layer.borderWidth = 2
+        firstNameLabel.layer.borderColor = UIColor.gray.cgColor
         firstNameLabel.setupRightSideImage(sistemImageNamed: "person.text.rectangle")
         
-        lastNameLabel.layer.borderWidth = 1
-        lastNameLabel.layer.borderColor = UIColor.lightGray.cgColor
+        lastNameLabel.layer.borderWidth = 2
+        lastNameLabel.layer.borderColor = UIColor.gray.cgColor
         lastNameLabel.setupRightSideImage(sistemImageNamed: "person.text.rectangle")
         
-        emailLabel.layer.borderWidth = 1
-        emailLabel.layer.borderColor = UIColor.lightGray.cgColor
+        emailLabel.layer.borderWidth = 2
+        emailLabel.layer.borderColor = UIColor.gray.cgColor
         emailLabel.setupRightSideImage(sistemImageNamed: "envelope")
         
-        passwordLabel.layer.borderWidth = 1
-        passwordLabel.layer.borderColor = UIColor.lightGray.cgColor
+        passwordLabel.layer.borderWidth = 2
+        passwordLabel.layer.borderColor = UIColor.gray.cgColor
         passwordLabel.setupRightSideImage(sistemImageNamed: "lock.rectangle")
         
         //Declared in "SlideViewWhithKeyboard" under "extensions" to manage keyboard obstructing textField and adding touch outside to dismiss.
@@ -114,9 +124,9 @@ final class RegisterViewController: UIViewController {
             Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
                 
                 if let err = error {
+                    self.spinner.dismiss(animated: true)
                     //Cals function from extension "HandleFirebaseErrors" under "extensions" folder to properly present error for user.
                     self.handleFireAuthError(error: err)
-                    
                     print(err.localizedDescription)
                     return
                 } else {

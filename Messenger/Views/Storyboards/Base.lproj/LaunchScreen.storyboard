@@ -17,26 +17,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="c0V-iV-95r">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Chat icon no background" translatesAutoresizingMaskIntoConstraints="NO" id="AGP-wN-7VI">
-                                <rect key="frame" x="82" y="378" width="250" height="140"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="13 Pro - 1" translatesAutoresizingMaskIntoConstraints="NO" id="YpQ-5D-cGV">
+                                <rect key="frame" x="117" y="358" width="180" height="180"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="140" id="pjd-pB-HAo"/>
-                                    <constraint firstAttribute="width" constant="250" id="uGU-Ck-MGU"/>
+                                    <constraint firstAttribute="width" constant="180" id="E63-l8-7oU"/>
+                                    <constraint firstAttribute="height" constant="180" id="u8o-5P-Y5h"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="c0V-iV-95r" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="Z3C-Ek-bh4"/>
-                            <constraint firstAttribute="trailing" secondItem="c0V-iV-95r" secondAttribute="trailing" id="aMI-pi-rje"/>
-                            <constraint firstAttribute="bottom" secondItem="c0V-iV-95r" secondAttribute="bottom" id="fsW-IO-m15"/>
-                            <constraint firstItem="AGP-wN-7VI" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="h2Y-gU-bKA"/>
-                            <constraint firstItem="AGP-wN-7VI" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="jHi-dW-0f2"/>
-                            <constraint firstItem="c0V-iV-95r" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="tNu-Nq-SGn"/>
+                            <constraint firstItem="YpQ-5D-cGV" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="2hc-OC-czw"/>
+                            <constraint firstItem="YpQ-5D-cGV" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="oKO-Vc-6fS"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -46,8 +39,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Background" width="375" height="812"/>
-        <image name="Chat icon no background" width="6287" height="3976"/>
+        <image name="13 Pro - 1" width="500" height="500"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

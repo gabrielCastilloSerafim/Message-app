@@ -22,9 +22,27 @@ final class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //round button corners
+        //round button corners and change font
         loginButton.layer.cornerRadius = loginButton.frame.height/4
+        if #available(iOS 15.0, *) {
+            loginButton.configuration?.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
+                var outgoing = incoming
+                outgoing.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+                return outgoing
+            }
+        } else {
+            loginButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        }
         registerButton.layer.cornerRadius = registerButton.frame.height/4
+        if #available(iOS 15.0, *) {
+            registerButton.configuration?.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
+                var outgoing = incoming
+                outgoing.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+                return outgoing
+            }
+        } else {
+            registerButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        }
         
         //Delegates
         emailField.delegate = self
@@ -33,6 +51,7 @@ final class LoginViewController: UIViewController {
         //Changes the back button text that will appear in the next view controller
         let backBarBtnItem = UIBarButtonItem()
             backBarBtnItem.title = " "
+            backBarBtnItem.tintColor = #colorLiteral(red: 0.3908646405, green: 0.6502062678, blue: 0.5047287941, alpha: 1)
             navigationItem.backBarButtonItem = backBarBtnItem
         
         //Hides tab bar controller
@@ -42,11 +61,11 @@ final class LoginViewController: UIViewController {
         self.navigationItem.setHidesBackButton(true, animated: true)
         
         //Setup text field border and add right icon using extension from "UITextfieldExtensions" under "extensions" folder
-        emailField.layer.borderWidth = 1
+        emailField.layer.borderWidth = 2
         emailField.layer.borderColor = UIColor.lightGray.cgColor
         emailField.setupRightSideImage(sistemImageNamed: "envelope")
         
-        passwordField.layer.borderWidth = 1
+        passwordField.layer.borderWidth = 2
         passwordField.layer.borderColor = UIColor.lightGray.cgColor
         passwordField.setupRightSideImage(sistemImageNamed: "lock.rectangle")
         
@@ -77,7 +96,7 @@ final class LoginViewController: UIViewController {
 
         // if textField bottom is below keyboard bottom - bump the frame up
         if textFieldBottomY > keyboardTopY {
-            let textFieldHeight:Double = 70
+            let textFieldHeight:Double = 52
             let textBoxY = convertedTextFieldFrame.origin.y
             let newFrameY = (textBoxY - keyboardTopY + textFieldHeight) * -1
             view.frame.origin.y = newFrameY
