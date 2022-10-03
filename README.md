@@ -10,3 +10,14 @@ This is a real time IOS messaging app wrote in Swift 5. The app uses Firebase Au
 - Deleting Conversations.
 - User Profile.
 
+## Screenshots
+
+![My Image](Howdy_Mockups/1.png)
+![My Image](Howdy_Mockups/2.png)
+![My Image](Howdy_Mockups/3.png)
+![My Image](Howdy_Mockups/4.png)
+![My Image](Howdy_Mockups/5.png)
+![My Image](Howdy_Mockups/6.png)
+![My Image](Howdy_Mockups/7.png)
+
+
