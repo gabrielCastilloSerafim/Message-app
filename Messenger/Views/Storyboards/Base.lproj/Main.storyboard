@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -214,7 +215,7 @@
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="2dW-f0-4gF"/>
-                        <color key="backgroundColor" red="0.39215686274509803" green="0.65098039215686276" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" name="Green 3"/>
                         <constraints>
                             <constraint firstItem="7qN-hA-gju" firstAttribute="centerX" secondItem="XIR-Ar-Ih3" secondAttribute="centerX" id="23b-kW-HIa"/>
                             <constraint firstAttribute="bottom" secondItem="NVn-xg-CCw" secondAttribute="bottom" multiplier="844/326" id="D6p-yK-kTP"/>
@@ -276,7 +277,7 @@
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="VnC-l2-QJI">
                                         <rect key="frame" x="0.0" y="0.99999999999999289" width="128" height="126.66666666666666"/>
-                                        <color key="tintColor" red="0.353759408" green="0.58275485039999997" blue="0.4534271359" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" name="Green 3"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tp8-hT-vOS">
                                         <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
@@ -362,7 +363,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.39086464050000003" green="0.65020626780000002" blue="0.50472879410000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" name="Green 3"/>
                                 <constraints>
                                     <constraint firstItem="FHD-75-pXo" firstAttribute="leading" secondItem="RYg-FU-S73" secondAttribute="trailing" multiplier="20/390" id="1Kd-7Z-wMB"/>
                                     <constraint firstAttribute="bottom" secondItem="z2f-sb-TVf" secondAttribute="bottom" multiplier="844/754" id="5ZA-D0-4hp"/>
@@ -456,7 +457,7 @@
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RFo-g5-djw">
                                                 <rect key="frame" x="0.0" y="0.0" width="350" height="52"/>
-                                                <color key="backgroundColor" red="0.0078431372549019607" green="0.34901960784313724" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" name="Green 2"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="52" id="3QM-bz-uZn"/>
                                                 </constraints>
@@ -510,7 +511,7 @@
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="k9l-aJ-vx0"/>
-                        <color key="backgroundColor" red="0.39086464050000003" green="0.65020626780000002" blue="0.50472879410000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" name="Green 3"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="NKx-kH-T4o" secondAttribute="bottom" id="2ko-qJ-ITK"/>
                             <constraint firstAttribute="bottom" secondItem="0vf-58-VHm" secondAttribute="bottom" id="5N8-vC-SGv"/>
@@ -584,6 +585,12 @@
         <image name="message.fill" catalog="system" width="128" height="114"/>
         <image name="person.circle.fill" catalog="system" width="128" height="123"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
+        <namedColor name="Green 2">
+            <color red="0.059000000357627869" green="0.34900000691413879" blue="0.16099999845027924" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Green 3">
+            <color red="0.3449999988079071" green="0.54900002479553223" blue="0.41999998688697815" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
